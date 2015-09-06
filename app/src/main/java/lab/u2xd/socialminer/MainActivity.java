@@ -2,37 +2,56 @@ package lab.u2xd.socialminer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
 
-import lab.u2xd.socialminer.facebook.LoginManager;
+import lab.u2xd.socialminer.context.CallLoader;
+import lab.u2xd.socialminer.context.MinerManager;
 
 public class MainActivity extends AppCompatActivity {
 
     private CallbackManager fbCallbackManager;
     private LoginManager loginManager;
+    private MinerManager minerManager;
 
     private LoginButton btnFacebook;
     private Button btnLogin;
+    private TextView txtConsole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Application 초기화
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
-        fbCallbackManager = CallbackManager.Factory.create();
 
+        //주요 객체 초기화
+        fbCallbackManager = CallbackManager.Factory.create();
         loginManager = new LoginManager();
+        minerManager = new MinerManager(this);
+
+        //UI initializing
         btnLogin = (Button) findViewById(R.id.button_login);
         btnLogin.setOnClickListener(loginManager);
         btnFacebook = (LoginButton) findViewById(R.id.button_login_facebook);
         btnFacebook.registerCallback(fbCallbackManager, loginManager);
+        txtConsole = (TextView) findViewById(R.id.txtResult);
+
+        //테스트
+        minerManager.readCallList();
+        String console = "";
+        for(int i = 0; i < minerManager.getReadCallCount(); i++) {
+            console += "[" + i + "] " + minerManager.readCall(i)[0] + ", " + minerManager.readCall(i)[1] + ", " + minerManager.readCall(i)[2] + ", " + minerManager.readCall(i)[3] + ", " + minerManager.readCall(i)[4] + "\r\n";
+        }
+        txtConsole.setText(console);
     }
 
     @Override

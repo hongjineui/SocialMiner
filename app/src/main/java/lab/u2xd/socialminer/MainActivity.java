@@ -2,7 +2,6 @@ package lab.u2xd.socialminer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -13,8 +12,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
 
-import lab.u2xd.socialminer.context.CallLoader;
-import lab.u2xd.socialminer.context.MinerManager;
+import lab.u2xd.socialminer.contextminer.MinerManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,10 +44,17 @@ public class MainActivity extends AppCompatActivity {
         txtConsole = (TextView) findViewById(R.id.txtResult);
 
         //테스트
-        minerManager.readCallList();
+        minerManager.querySMSList();
         String console = "";
-        for(int i = 0; i < minerManager.getReadCallCount(); i++) {
-            console += "[" + i + "] " + minerManager.readCall(i)[0] + ", " + minerManager.readCall(i)[1] + ", " + minerManager.readCall(i)[2] + ", " + minerManager.readCall(i)[3] + ", " + minerManager.readCall(i)[4] + "\r\n";
+        for(int i = 0; i < minerManager.getReadSMSCount(); i++) {
+            String[] temp = minerManager.readSMS(i);
+            console += "[" + i + "] ";
+            for(int j = 0; j < temp.length; j++) {
+                console += temp[j] + ", ";
+                if(j == temp.length - 1) {
+                    console += "\r\n";
+                }
+            }
         }
         txtConsole.setText(console);
     }

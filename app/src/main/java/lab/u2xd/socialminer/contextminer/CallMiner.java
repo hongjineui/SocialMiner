@@ -1,4 +1,4 @@
-package lab.u2xd.socialminer.context;
+package lab.u2xd.socialminer.contextminer;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,10 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lab.u2xd.socialminer.contextminer.minerobject.Contextminer;
+
 /**
  * Created by yim on 2015-08-31.
  */
-public class CallLoader {
+public class CallMiner implements Contextminer {
 
     final static private String[] CALL_PROJECTION
             = { CallLog.Calls.TYPE, CallLog.Calls.CACHED_NAME, CallLog.Calls.NUMBER,
@@ -21,10 +23,11 @@ public class CallLoader {
     private int iCallCount = 0;
     private ArrayList<String[]> listQueriedResult;
 
-    public CallLoader() {
+    public CallMiner() {
         listQueriedResult = new ArrayList<String[]>();
     }
 
+    @Override
     public void readLog(Context context) {
         curBasicCall = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, CALL_PROJECTION, null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
         iCallCount = curBasicCall.getCount();
@@ -48,13 +51,14 @@ public class CallLoader {
         }
     }
 
-    public int getCallListCount() {
+    @Override
+    public int getListCount() {
         return iCallCount;
     }
 
     public String[] getQueriedResult(int index) {
         if(iCallCount == 0)
-            throw new NullPointerException();
+            throw new NullPointerException();   //추후 사용자지정 에러 처리할 것
 
         return listQueriedResult.get(index);
     }

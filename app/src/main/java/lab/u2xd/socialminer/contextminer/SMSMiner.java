@@ -4,20 +4,18 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.CallLog;
 import android.provider.Telephony.Sms;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import lab.u2xd.socialminer.contextminer.minerobject.Contextminer;
+import lab.u2xd.socialminer.contextminer.callback.Contextminer;
 
 /**
  * Created by yim on 2015-09-07.
  */
-public class SMSMiner implements Contextminer {
+public class SMSMiner implements Contextminer, Runnable {
 
     final static private String[] SMS_PROJECTION
             = { Sms._ID, Sms.THREAD_ID, Sms.ADDRESS, Sms.DATE, Sms.DATE_SENT, Sms.BODY };
@@ -72,5 +70,10 @@ public class SMSMiner implements Contextminer {
             throw new NullPointerException();   //추후 사용자지정 에러 처리할 것
 
         return listQueriedResult.get(index);
+    }
+
+    @Override
+    public void run() {
+
     }
 }

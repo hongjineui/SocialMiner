@@ -44,19 +44,7 @@ public class MainActivity extends AppCompatActivity {
         txtConsole = (TextView) findViewById(R.id.txtResult);
 
         //테스트
-        minerManager.querySMSList();
-        String console = "";
-        for(int i = 0; i < minerManager.getReadSMSCount(); i++) {
-            String[] temp = minerManager.readSMS(i);
-            console += "[" + i + "] ";
-            for(int j = 0; j < temp.length; j++) {
-                console += temp[j] + ", ";
-                if(j == temp.length - 1) {
-                    console += "\r\n";
-                }
-            }
-        }
-        txtConsole.setText(console);
+        minerManager.queryAllData();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package lab.u2xd.socialminer.contextminer.minerobject;
+package lab.u2xd.socialminer.contextminer.callback;
 
 import android.content.Context;
 

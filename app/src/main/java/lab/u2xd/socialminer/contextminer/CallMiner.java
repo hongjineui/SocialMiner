@@ -8,12 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import lab.u2xd.socialminer.contextminer.minerobject.Contextminer;
+import lab.u2xd.socialminer.contextminer.callback.Contextminer;
 
 /**
  * Created by yim on 2015-08-31.
  */
-public class CallMiner implements Contextminer {
+public class CallMiner implements Contextminer, Runnable {
 
     final static private String[] CALL_PROJECTION
             = { CallLog.Calls.TYPE, CallLog.Calls.CACHED_NAME, CallLog.Calls.NUMBER,
@@ -61,5 +61,10 @@ public class CallMiner implements Contextminer {
             throw new NullPointerException();   //추후 사용자지정 에러 처리할 것
 
         return listQueriedResult.get(index);
+    }
+
+    @Override
+    public void run() {
+
     }
 }

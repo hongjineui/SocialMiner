@@ -1,15 +1,12 @@
-package lab.u2xd.socialminer.contextminer;
+package lab.u2xd.socialminer.context.miner;
 
 import android.content.Context;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.Telephony;
 import android.util.Log;
-import android.widget.TextView;
 
-import java.util.Objects;
-
-import lab.u2xd.socialminer.contextminer.callback.Queryable;
+import lab.u2xd.socialminer.context.miner.callback.Queryable;
 
 /**
  * Created by yim on 2015-08-31.
@@ -29,15 +26,22 @@ public class MinerManager implements Queryable {
 
     private PhoneMiner minerCallLog;
     private PhoneMiner minerSMS;
+    private ElementConverter converter;
 
     public MinerManager(Context context) {
         this.context = context;
 
         minerCallLog = new PhoneMiner(CallLog.Calls.CONTENT_URI, CALL_PROJECTION, PhoneMiner.DEFAULT_SORT_ORDER);
         minerSMS = new PhoneMiner(Uri.parse("content://sms"), SMS_PROJECTION, PhoneMiner.DEFAULT_SORT_ORDER);
-        //Deprecated
-        callLoader = new CallMiner();
-        smsLoader = new SMSMiner();
+        converter = new ElementConverter();
+    }
+
+    public void queryCallData() {
+        minerCallLog.queryRawData(context, this);
+    }
+
+    public void querySMSData() {
+        minerSMS.queryRawData(context, this);
     }
 
     public void queryAllData() {
@@ -47,6 +51,13 @@ public class MinerManager implements Queryable {
 
     @Override
     public void receiveData(Object sender) {
+
+    }
+
+
+    //-----------------//
+    @Deprecated
+    private void testshowReceivedData(Object sender) {
         String console = "";
         Log.e("MinerManager", "Data Writed!");
         if(sender.equals(minerSMS)) {
@@ -63,31 +74,5 @@ public class MinerManager implements Queryable {
                 Log.e("Minermanager", console);
             }
         }
-    }
-
-    //Deprecated Elements
-    private CallMiner callLoader;
-    private SMSMiner smsLoader;
-
-    public void queryCallList() {
-        callLoader.readLog(context);
-    }
-    public void querySMSList() {
-        smsLoader.readLog(context);
-    }
-
-    public String[] getCall_Elements(int index) {
-        return callLoader.getQueriedResult(index);
-    }
-    public String[] getSMS_Elements(int index) {
-        return smsLoader.getQueriedResult(index);
-    }
-
-
-    public int getReadCallCount() {
-        return callLoader.getListCount();
-    }
-    public int getReadSMSCount() {
-        return smsLoader.getListCount();
     }
 }

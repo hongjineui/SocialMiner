@@ -10,14 +10,9 @@ import com.facebook.FacebookException;
  * 로그인 작업 처리 매니저
  * Created by ysb on 2015-08-25.
  */
-public class LoginManager implements View.OnClickListener, FacebookCallback {
+public class LoginManager implements FacebookCallback {
 
     public LoginManager() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
 
     }
 

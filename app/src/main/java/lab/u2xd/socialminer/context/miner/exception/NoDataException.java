@@ -1,4 +1,4 @@
-package lab.u2xd.socialminer.contextminer.exception;
+package lab.u2xd.socialminer.context.miner.exception;
 
 /**
  * Created by ysb on 2015-09-11.

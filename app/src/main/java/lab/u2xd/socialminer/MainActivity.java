@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -12,14 +14,15 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
 
-import lab.u2xd.socialminer.contextminer.MinerManager;
+import lab.u2xd.socialminer.context.miner.MinerManager;
 
 public class MainActivity extends AppCompatActivity {
 
     private CallbackManager fbCallbackManager;
-    private LoginManager loginManager;
-    private MinerManager minerManager;
 
+    private MasterManager master;
+
+    private ProgressBar progressBar;
     private LoginButton btnFacebook;
     private Button btnLogin;
     private TextView txtConsole;
@@ -33,18 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
         //주요 객체 초기화
         fbCallbackManager = CallbackManager.Factory.create();
-        loginManager = new LoginManager();
-        minerManager = new MinerManager(this);
+        master = new MasterManager(this);
 
         //UI initializing
         btnLogin = (Button) findViewById(R.id.button_login);
-        btnLogin.setOnClickListener(loginManager);
+        btnLogin.setOnClickListener(master);
         btnFacebook = (LoginButton) findViewById(R.id.button_login_facebook);
-        btnFacebook.registerCallback(fbCallbackManager, loginManager);
+        btnFacebook.registerCallback(fbCallbackManager, master);
         txtConsole = (TextView) findViewById(R.id.txtResult);
-
-        //테스트
-        minerManager.queryAllData();
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

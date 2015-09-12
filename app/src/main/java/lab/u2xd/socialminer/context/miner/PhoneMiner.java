@@ -1,16 +1,14 @@
-package lab.u2xd.socialminer.contextminer;
+package lab.u2xd.socialminer.context.miner;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.CallLog;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Objects;
 
-import lab.u2xd.socialminer.contextminer.callback.Queryable;
+import lab.u2xd.socialminer.context.miner.callback.Queryable;
 
 /**
  * Created by ysb on 2015-09-11.
@@ -73,5 +71,12 @@ public class PhoneMiner {
 
     public String[] getQueriedResult(int index) {
         return listQueriedResult.get(index);
+    }
+    public String[][] getQueriedResult() {
+        String[][] temp = new String[listQueriedResult.size()][];
+        for(int i = 0; i < listQueriedResult.size(); i++) {
+            temp[i] = listQueriedResult.get(i);
+        }
+        return null;
     }
 }

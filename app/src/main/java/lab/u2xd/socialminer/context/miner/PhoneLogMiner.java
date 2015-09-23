@@ -13,7 +13,7 @@ import lab.u2xd.socialminer.context.miner.callback.Queryable;
 /**
  * Created by ysb on 2015-09-11.
  */
-public class PhoneMiner {
+public class PhoneLogMiner {
 
     final public static String DEFAULT_SORT_ORDER = "date DESC";
 
@@ -27,7 +27,7 @@ public class PhoneMiner {
 
     private Queryable callback;
 
-    public PhoneMiner(Uri ContentURI, String[] QeuryProjection, String SortOrder) {
+    public PhoneLogMiner(Uri ContentURI, String[] QeuryProjection, String SortOrder) {
         listQueriedResult = new ArrayList<String[]>();
         contentUri = ContentURI;
         qeuryProjection = QeuryProjection;
@@ -35,7 +35,7 @@ public class PhoneMiner {
 
     private void readLog() {
         curBasic = context.getContentResolver().query(contentUri, qeuryProjection, null, null, sortOrder);
-        Log.e("PhoneMiner", "Data Reading Complete : " + contentUri.toString() + ", " + sortOrder);
+        Log.e("PhoneLogMiner", "Data Reading Complete : " + contentUri.toString() + ", " + sortOrder);
         listQueriedResult.clear();
 
         if(curBasic.moveToFirst()) {
@@ -53,7 +53,7 @@ public class PhoneMiner {
     }
 
     public void queryRawData(Context context, Queryable callback) {
-        Log.e("PhoneMiner", "Data Reading...");
+        Log.e("PhoneLogMiner", "Data Reading...");
         this.context = context;
         Thread worker = new Thread(new Runnable() {
             @Override

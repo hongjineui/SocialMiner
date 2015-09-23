@@ -1,7 +1,11 @@
 package lab.u2xd.socialminer;
 
+import android.content.Context;
+import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         txtConsole = (TextView) findViewById(R.id.txtResult);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
+
+        if (!isContainedInNotificationListeners(getApplicationContext())) {
+            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+            startActivityForResult(intent, 2222);
+        }
     }
 
     @Override
@@ -81,4 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private static boolean isContainedInNotificationListeners(Context context)
+    {
+        String enabledListeners = Settings.Secure.getString(context.getContentResolver(), "enabled_notification_listeners");
+        return !TextUtils.isEmpty(enabledListeners) && enabledListeners.contains(context.getPackageName());
+    }
+
+
 }

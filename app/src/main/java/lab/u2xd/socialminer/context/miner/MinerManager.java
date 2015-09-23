@@ -24,16 +24,20 @@ public class MinerManager implements Queryable {
 
     private Context context;
 
-    private PhoneMiner minerCallLog;
-    private PhoneMiner minerSMS;
+    private PhoneLogMiner minerCallLog;
+    private PhoneLogMiner minerSMS;
+    private NotificationMiner minerNotification;
+
     private ElementConverter converter;
 
-    public MinerManager(Context context) {
+    public MinerManager(Context context, ElementConverter converter) {
         this.context = context;
 
-        minerCallLog = new PhoneMiner(CallLog.Calls.CONTENT_URI, CALL_PROJECTION, PhoneMiner.DEFAULT_SORT_ORDER);
-        minerSMS = new PhoneMiner(Uri.parse("content://sms"), SMS_PROJECTION, PhoneMiner.DEFAULT_SORT_ORDER);
-        converter = new ElementConverter();
+        minerCallLog = new PhoneLogMiner(CallLog.Calls.CONTENT_URI, CALL_PROJECTION, PhoneLogMiner.DEFAULT_SORT_ORDER);
+        minerSMS = new PhoneLogMiner(Uri.parse("content://sms"), SMS_PROJECTION, PhoneLogMiner.DEFAULT_SORT_ORDER);
+        minerNotification = new NotificationMiner();
+
+        this.converter = converter;
     }
 
     public void queryCallData() {
@@ -51,7 +55,13 @@ public class MinerManager implements Queryable {
 
     @Override
     public void receiveData(Object sender) {
+        if(sender.equals(minerCallLog)) {
 
+        } else if(sender.equals(minerSMS)) {
+
+        } else {
+            Log.e("Miner Corp.", "Unknown Sender!");
+        }
     }
 
 

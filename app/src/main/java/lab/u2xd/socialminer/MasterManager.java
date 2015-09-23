@@ -6,7 +6,9 @@ import android.view.View;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 
+import lab.u2xd.socialminer.context.miner.ElementConverter;
 import lab.u2xd.socialminer.context.miner.MinerManager;
+import lab.u2xd.socialminer.context.processor.processManager;
 
 /**
  * Created by ysb on 2015-09-11.
@@ -17,10 +19,14 @@ public class MasterManager implements View.OnClickListener, FacebookCallback {
 
     private LoginManager loginManager;
     private MinerManager minerManager;
+    private processManager processManager;
+    private ElementConverter converter;
 
     public MasterManager(Context context) {
         loginManager = new LoginManager();
-        minerManager = new MinerManager(context);
+        converter = new ElementConverter();
+        minerManager = new MinerManager(context, converter);
+        processManager = new processManager(converter);
     }
 
     @Override

@@ -24,4 +24,11 @@ public class ContextData {
     public String[] getColumns() {
         return listData.keySet().toArray(new String[0]);
     }
+
+    /** 현재 ContextData에 연결된 Linker들에게 신호를 보냄
+     *
+     */
+    public void impact() {
+
+    }
 }

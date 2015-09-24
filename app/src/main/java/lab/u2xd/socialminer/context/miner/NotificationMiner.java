@@ -16,8 +16,15 @@ public class NotificationMiner extends NotificationListenerService {
     public static final String EXTRA_LARGE_ICON = "android.largeIcon";
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.e("Notification Miner", "Service Created");
+    }
+
+    @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
+        Log.e("Notification Miner","Notification Posted");
         Notification notis = sbn.getNotification();
         Log.e("Notification Miner", notis.extras.getString(Notification.EXTRA_TEXT));
     }
@@ -25,5 +32,6 @@ public class NotificationMiner extends NotificationListenerService {
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         super.onNotificationRemoved(sbn);
+        Log.e("Notification Miner", "Notification Removed");
     }
 }

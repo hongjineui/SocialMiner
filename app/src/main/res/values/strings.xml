@@ -6,4 +6,5 @@
     <string name="facebook_app_id">1702176283334485</string>
     <string name="button_login_facebook">Log in</string>
     <string name="button_show_data">Show Data</string>
+    <string name="Service_Notification">Notification Miner</string>
 </resources>
